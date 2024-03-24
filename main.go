@@ -41,11 +41,16 @@ func main() {
 
 	zero := big.NewInt(0)
 
-	fmt.Printf("The address that sent/received the most in the last %d blocks:\n", blocksToFetch)
+	fmt.Printf(
+		"The address which balance has changed the most in the last %d blocks is %s\n",
+		blocksToFetch,
+		address,
+	)
+
 	if value.Cmp(zero) == -1 {
-		fmt.Printf("Address %s sent the most\n", address)
+		fmt.Println("It has sent the most ETH:")
 	} else {
-		fmt.Printf("Address %s received the most\n", address)
+		fmt.Println("It has received the most ETH:")
 	}
 
 	fmt.Println(value.String(), "WEI")
