@@ -196,8 +196,9 @@ func (s *Service) GetLargestBalanceChange(blocks []Block) (string, *big.Int, err
 }
 
 func (s *Service) calculateTransactions(transactions []Transaction, addressesBalanceChanges map[string]*big.Int) error {
+	// Some blocks may not have any transactions
 	if len(transactions) == 0 {
-		return errors.New("no transactions provided")
+		return nil
 	}
 
 	if addressesBalanceChanges == nil {
