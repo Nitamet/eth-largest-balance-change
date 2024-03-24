@@ -20,7 +20,10 @@ func main() {
 	endpointUrl := os.Getenv("ENDPOINT_URL")
 	token := os.Getenv("API_TOKEN")
 
-	ethereumService := ethereum.CreateService(endpointUrl, token)
+	ethereumService, err := ethereum.CreateService(endpointUrl, token)
+	if err != nil {
+		panic(err)
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()

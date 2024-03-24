@@ -34,7 +34,15 @@ const (
 	rateLimitAttempts                   = 5
 )
 
-func CreateService(url, token string) *Service {
+func CreateService(url, token string) (*Service, error) {
+	if url == "" {
+		return nil, errors.New("empty URL provided")
+	}
+
+	if token == "" {
+		return nil, errors.New("empty token provided")
+	}
+
 	// Remove trailing slash if present
 	url = strings.TrimSuffix(url, "/")
 
@@ -42,7 +50,7 @@ func CreateService(url, token string) *Service {
 		rpc: &jsonrpc.Client{
 			Endpoint: fmt.Sprintf("%s/%s", url, token),
 		},
-	}
+	}, nil
 }
 
 func (s *Service) getLastBlock(ctx context.Context) (string, error) {

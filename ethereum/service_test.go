@@ -57,7 +57,10 @@ func TestService_GetLargestBalanceChange(t *testing.T) {
 			blocks = append(blocks, createBlockFromBlockTransactions(data))
 		}
 
-		service := ethereum.CreateService("", "")
+		service, err := ethereum.CreateService("url", "token")
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		// Address 0x1 has 0 - 1535333445 - 4545666742 + 545321498 + 13215523 =  -5 522 463 166
 		// Address 0x2 has 1535333445 + 4545666742 - 97979882342 = -91 898 882 155
