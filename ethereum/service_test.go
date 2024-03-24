@@ -59,6 +59,14 @@ func TestService_GetLargestBalanceChange(t *testing.T) {
 
 		service := ethereum.CreateService("", "")
 
+		// Address 0x1 has 0 - 1535333445 - 4545666742 + 545321498 + 13215523 =  -5 522 463 166
+		// Address 0x2 has 1535333445 + 4545666742 - 97979882342 = -91 898 882 155
+		// Address 0x3 has 97979882342 - 153445534656 - 545321498 = -56 010 973 812
+		// Address 0x4 has 0 - 5366678 = -5366678
+		// Address 0x5 has 153445534656 + 2341545 - 13215523 = 153 434 660 678
+		// Address 0x7 has 0 - 2341545 + 5366678 = 3 025 133
+		//
+		// Therefore, address 0x5 has the largest balance change with 153 434 660 678
 		expectedAddress := "0x5"
 		expectedValue := big.NewInt(153434660678)
 
