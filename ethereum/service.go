@@ -205,6 +205,11 @@ func (s *Service) calculateTransactions(transactions []Transaction, addressesBal
 	}
 
 	for _, transaction := range transactions {
+		// Skip zero transactions
+		if transaction.Value == "" || transaction.Value == "0x0" {
+			continue
+		}
+
 		transactionValue, ok := big.NewInt(0).SetString(transaction.Value, 0)
 		if !ok {
 			return fmt.Errorf("failed to parse transaction value: %s", transaction.Value)
@@ -216,6 +221,11 @@ func (s *Service) calculateTransactions(transactions []Transaction, addressesBal
 			addressesBalanceChanges[transaction.From] = zeroValue.Sub(zeroValue, transactionValue)
 		} else {
 			addressFromBalance.Sub(addressFromBalance, transactionValue)
+		}
+
+		// Skip empty "to" addresses
+		if transaction.To == "" {
+			continue
 		}
 
 		addressToBalance, hasAddressTo := addressesBalanceChanges[transaction.To]
